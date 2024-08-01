@@ -1,3 +1,9 @@
+<?php
+$json = file_get_contents("./data.json");
+$data = json_decode($json,true);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,8 +20,20 @@
 <body class="bg-dark">
   <div class="container">
     <div class="mt-4 mb-5 d-flex justify-content-between align-items-center">
-      <h1 class="text-white">Get your Pokemon!</h1>
       <div>
+        <h1 class="text-white">Get your Pokemon!</h1>
+        <i class="fab fa-facebook" aria-hidden="true" style="color: white; margin-right: 15px;"></i>
+        <i class="fab fa-github" aria-hidden="true" style="color: white; margin-right: 15px;"></i>
+        <i class="fab fa-twitter" style="color: white; margin-right: 15px;"></i>
+        <i class="fab fa-linkedin" aria-hidden="true" style="color: white; margin-right: 15px;"></i>
+      </div>
+      <form class="d-flex" role="search">
+      <input class="form-control me-2" type="search" placeholder="Enter Pokemon Name" aria-label="Search">
+      <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
+      <div>
+        <button class="btn btn-success">
+          <i class="fa fa-user-plus" aria-hidden="true"></i> SignUp</button>
         <button class="btn btn-primary">
           <i class="fa fa-sign-in"></i> Login</button>
       </div>
@@ -33,11 +51,19 @@
         </tr>
       </thead>
       <tbody>
-
-        <!-- Write your code here -->
+        <tr>
+        <?php foreach($data as $element): ?>
+        <td> <img src="<?= $element ["image"]["thumbnail"]  ?>"></td>
+        <td> <?= $element["name"]["english"]?></td>
+        <td> <?= strToUpper($element["species"])?></td>
+        <td> <?= $element["description"] ?> </td>
+        <td> <?= $element["profile"]["weight"] ?> </td>
+        <td> <?= $element["profile"]["height"] ?> </td>
+        <td> <button type="button" class="btn btn-warning"> Collect</button> </td>
+        </tr>
+        <?php endforeach; ?>
       </tbody>
     </table>
-
   </div>
   <!-- DNT MAKE ANY CHANGES ON THE CODE BELOW -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
